@@ -1,5 +1,3 @@
-import tkinter
-import tkinter.messagebox
 import customtkinter
 
 customtkinter.set_appearance_mode('System') 
@@ -82,80 +80,122 @@ class App(customtkinter.CTk):
              
     def gcdf(self):
         """Находит НОД a и b"""
-        a = int(self.entry_1.get())
-        b = int(self.entry_2.get())
-        a1 = a
-        b1 = b
-        while a != 0 and b != 0:
-            if a > b:
-                a = a % b
-            else:
-                b = b % a
-        self.gcdinf2 = customtkinter.CTkLabel(master = self.gcd, text = f'НОД({a1},{b1}) = {a+b}')
-        self.gcdinf2.grid(row =1, column = 0, padx = 10, pady = 0)
+        if hasattr(self, 'gcdinf2'):
+            self.gcdinf2.destroy() 
+        if self.entry_1.get().isdigit() and self.entry_2.get().isdigit():
+            a = int(self.entry_1.get())
+            b = int(self.entry_2.get())
+            a1 = a
+            b1 = b
+            while a != 0 and b != 0:
+                if a > b:
+                    a = a % b
+                else:
+                    b = b % a
+            self.gcdinf2 = customtkinter.CTkLabel(master = self.gcd, text = f'НОД({a1},{b1}) = {a+b}')
+            self.gcdinf2.grid(row =1, column = 0, padx = 10, pady = 0)
+        else:
+            self.gcdinf2 = customtkinter.CTkLabel(master = self.gcd, text = 'Неверно введены данные')
+            self.gcdinf2.grid(row =1, column = 0, padx = 10, pady = 0)
     def lcmf(self):
         """Находит НОК a и b"""
-        a= int(self.entry_1.get())
-        b= int(self.entry_2.get())
-        a1 = a
-        b1 = b
-        while a != 0 and b != 0:
-            if a > b:
-                a = a % b
-            else:
-                b = b % a
-        self.gcdinf3 = customtkinter.CTkLabel(master = self.lcm, text = f'НОК({a1},{b1}) = {(a1*b1)//(a+b)}')
-        self.gcdinf3.grid(row =1, column = 0, padx = 10, pady = 0)
+        if hasattr(self, 'gcdinf3'):
+            self.gcdinf3.destroy() 
+        if self.entry_1.get().isdigit() and self.entry_2.get().isdigit():
+            a= int(self.entry_1.get())
+            b= int(self.entry_2.get())
+            a1 = a
+            b1 = b
+            while a != 0 and b != 0:
+                if a > b:
+                    a = a % b
+                else:
+                    b = b % a
+            self.gcdinf3 = customtkinter.CTkLabel(master = self.lcm, text = f'НОК({a1},{b1}) = {(a1*b1)//(a+b)}')
+            self.gcdinf3.grid(row =1, column = 0, padx = 10, pady = 0)
+        else:
+            self.gcdinf3 = customtkinter.CTkLabel(master = self.lcm, text = 'Неверно введены данные')
+            self.gcdinf3.grid(row =1, column = 0, padx = 10, pady = 0)
+        
     def primecheck(self):
         """Проверяет число на простоту"""
-        a = int(self.entry_1.get())
-        if a == 1:
-            self.primecheckinf = customtkinter.CTkLabel(master = self.prime, text = f'Число 1 не является простым')
-            self.primecheckinf.grid(row = 1, column = 0, padx = 10, pady = 0)
-            return 0
-        d = 2
-        while d * d <= a and a % d != 0:
-            d += 1
-        if d*d > a:
-            self.primecheckinf = customtkinter.CTkLabel(master = self.prime, text = f'Число {a} простое')
-            self.primecheckinf.grid(row = 1, column = 0, padx = 10, pady = 0)
+        if hasattr(self, 'primecheckinf'):
+            self.primecheckinf.destroy() 
+        if self.entry_1.get().isdigit():
+            a = int(self.entry_1.get())
+            if a == 1 or a == 0:
+                self.primecheckinf = customtkinter.CTkLabel(master = self.prime, text = f'Число {a} не является простым')
+                self.primecheckinf.grid(row = 1, column = 0, padx = 10, pady = 0)
+                return 0
+            d = 2
+            while d * d <= a and a % d != 0:
+                d += 1
+            if d*d > a:
+                self.primecheckinf = customtkinter.CTkLabel(master = self.prime, text = f'Число {a} простое')
+                self.primecheckinf.grid(row = 1, column = 0, padx = 10, pady = 0)
+            else:
+                self.primecheckinf = customtkinter.CTkLabel(master = self.prime, text = f'Число {a} не является простым')
+                self.primecheckinf.grid(row = 1, column = 0, padx = 10, pady = 0)
         else:
-            self.primecheckinf = customtkinter.CTkLabel(master = self.prime, text = f'Число {a} не является простым')
-            self.primecheckinf.grid(row = 1, column = 0, padx = 10, pady = 0)
+            self.primecheckinf = customtkinter.CTkLabel(master = self.prime, text = 'Неверно введены данные')
+            self.primecheckinf.grid(row =1, column = 0, padx = 10, pady = 0)
+
     def eulercount(self):
         """Вычисляет функцию Эйлера"""
-        a = int(self.entry_1.get())
-        result = 0
-        for i in range(1,a):
-            k = i
-            a1 = a
-            while a1 != 0 and k != 0:
-                if a1 > k:
-                    a1 = a1 % k
-                else:
-                    k = k % a1
-            if max(a1,k) == 1:
-                result += 1
-        self.eulerinfor = customtkinter.CTkLabel(master = self.euler, text = f'φ({a}) = {result}')
-        self.eulerinfor.grid(row = 1, column = 0, padx = 0, pady = 0)
+        if hasattr(self, 'eulerinfor'):
+            self.eulerinfor.destroy()
+        if self.entry_1.get().isdigit():
+            a = int(self.entry_1.get())
+            if a == 0:
+                self.eulerinfor = customtkinter.CTkLabel(master = self.euler, text = f'φ(0) не определено')
+                self.eulerinfor.grid(row = 1, column = 0, padx = 0, pady = 0)
+                return 0
+            result = 0
+            for i in range(1,a):
+                k = i
+                a1 = a
+                while a1 != 0 and k != 0:
+                    if a1 > k:
+                        a1 = a1 % k
+                    else:
+                        k = k % a1
+                if max(a1,k) == 1:
+                    result += 1
+            self.eulerinfor = customtkinter.CTkLabel(master = self.euler, text = f'φ({a}) = {result}')
+            self.eulerinfor.grid(row = 1, column = 0, padx = 0, pady = 0)
+        else:
+            self.eulerinfor = customtkinter.CTkLabel(master = self.euler, text = 'Неверно введены данные')
+            self.eulerinfor.grid(row = 1, column = 0, padx = 0, pady = 0)
+
     def factorizationf(self):
         """Выполняет разложение числа на простые множители"""
-        a = int(self.entry_1.get())
-        a1 = a
-        Ans = []
-        d = 2
-        while d * d <= a:
-            if a % d == 0:
-                Ans.append(str(d))
-                a = a // d
-            else:
-                d += 1
-        if a > 1:
-            Ans.append(str(a))
-        s = "*".join(Ans)
-        print(s)
-        self.factor = customtkinter.CTkLabel(master = self.factorization, text =f'a = {s}')
-        self.factor.grid(row = 1, column = 0, padx = 0, pady = 0) 
+        if hasattr(self, 'factor'):
+            self.factor.destroy() 
+        if self.entry_1.get().isdigit():
+            a = int(self.entry_1.get())
+            if a == 0:
+                self.factor = customtkinter.CTkLabel(master = self.factorization, text =f'a = 0')
+                self.factor.grid(row = 1, column = 0, padx = 0, pady = 0) 
+                return 0
+            a1 = a
+            Ans = []
+            d = 2
+            while d * d <= a:
+                if a % d == 0:
+                    Ans.append(str(d))
+                    a = a // d
+                else:
+                    d += 1
+            if a > 1:
+                Ans.append(str(a))
+            s = "*".join(Ans)
+            print(s)
+            self.factor = customtkinter.CTkLabel(master = self.factorization, text =f'a = {s}')
+            self.factor.grid(row = 1, column = 0, padx = 0, pady = 0) 
+        else:
+            self.factor= customtkinter.CTkLabel(master = self.factorization, text = 'Неверно введены данные')
+            self.factor.grid(row = 1, column = 0, padx = 0, pady = 0)
+            
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         """Меняет тему приложения"""
